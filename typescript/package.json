@@ -1,0 +1,35 @@
+{
+  "name": "codewars_typescript",
+  "version": "1.0.0",
+  "description": "Repository that contains TypeScript code for codewars tasks",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AliaksandrMakarchuk/codewars.git"
+  },
+  "keywords": [
+    "codewars",
+    "typescript"
+  ],
+  "author": "Aliaksandr Makarchuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AliaksandrMakarchuk/codewars/issues"
+  },
+  "homepage": "https://github.com/AliaksandrMakarchuk/codewars#readme",
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "chai": "^4.2.0",
+    "fancy-log": "^1.3.3",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "mocha": "^7.2.0",
+    "tsify": "^4.0.2",
+    "typescript": "^3.9.5",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}

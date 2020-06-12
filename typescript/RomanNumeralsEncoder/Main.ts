@@ -124,29 +124,7 @@ export class RomanNumeralsEncoderHelper {
                 powerRepresentationMap.push(new PowerRepresentation(1, powerRepresentation.Power * 10));
                 break;
         }
-        // if (powerRepresentation.Value < 5) {
-        //     powerRepresentationMap = this.getSmallValidPowerRepresentationMap(powerRepresentation);
-        // }else{
-        //     this.getSmallValidPowerRepresentationMap(new PowerRepresentation(powerRepresentation.Value - 5, powerRepresentation.Power))
-        //         .reverse().map(x => powerRepresentationMap.push(x));
-        //     powerRepresentationMap.push(new PowerRepresentation(5, powerRepresentation.Power));
-        // }
-
-        /*
-        2 = 1 + 1
-        3 = 1 + 1
-        4 = 5 - 1
-        8 = 5 + 3
-        9 = 10 - 1
-        54 = 50 + 4 = 50 + 5 - 1 => C + V + I
-        */
 
         return powerRepresentationMap;
-    }
-
-    private static getSmallValidPowerRepresentationMap(powerRepresentation: PowerRepresentation): Array<PowerRepresentation> {
-
-
-        return [];
     }
 }

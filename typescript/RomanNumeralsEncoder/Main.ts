@@ -19,6 +19,10 @@ export class PowerRepresentation {
         this._value = value;
         this._power = power;
     }
+
+    public toString(): string {
+        return `[${this._value}, ${this._power}]`
+    }
 }
 
 export class SymbolValueRepresentation {
@@ -89,8 +93,14 @@ export class RomanNumeralsEncoderHelper {
         return splitValue;
     }
 
-    public static getCorrectSymbol(value: number): string | undefined {
-        return this._romanSymbolToNumberMap.find((v, i, m) => v.Value == value)?.Symbol;
+    public static getCorrectSymbol(value: number): string {
+        let representation: SymbolValueRepresentation | undefined = this._romanSymbolToNumberMap.find((v, i, m) => v.Value == value);
+
+        if(representation == undefined) {
+            throw new Error(`There is no representation for "${value}"`);
+        }
+
+        return representation.Symbol;
     }
 
     public static isValidValue(value: number): boolean {

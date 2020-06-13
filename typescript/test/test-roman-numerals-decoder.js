@@ -1,10 +1,11 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RomanNumeralsEncoderHelper = exports.RomanNumeralsEncoder = exports.SymbolValueRepresentation = exports.PowerRepresentation = exports.solution = void 0;
-function solution(number) {
-    // convert the number to a roman numeral
-    return new RomanNumeralsEncoder().encode(number);
+exports.RomanNumeralsDecoderHelper = exports.SymbolValueRepresentation = exports.PowerRepresentation = exports.solution = void 0;
+function solution(roman) {
+    // complete the solution by transforming the
+    // string roman numeral into an integer
+    return 0;
 }
 exports.solution = solution;
 var PowerRepresentation = /** @class */ (function () {
@@ -51,99 +52,17 @@ var SymbolValueRepresentation = /** @class */ (function () {
     return SymbolValueRepresentation;
 }());
 exports.SymbolValueRepresentation = SymbolValueRepresentation;
-var RomanNumeralsEncoder = /** @class */ (function () {
-    function RomanNumeralsEncoder() {
+var RomanNumeralsDecoderHelper = /** @class */ (function () {
+    function RomanNumeralsDecoderHelper() {
     }
-    RomanNumeralsEncoder.prototype.encode = function (value) {
-        var powerRepresentationMap = RomanNumeralsEncoderHelper.getPowerRepresentationMap(value);
-        var result = '';
-        powerRepresentationMap.map(function (x) {
-            if (RomanNumeralsEncoderHelper.isValidValue(x.Value)) {
-                result += RomanNumeralsEncoderHelper.getCorrectSymbol(x.Value * x.Power);
-            }
-            else {
-                var validPowerRepresentationMap = RomanNumeralsEncoderHelper.getValidPowerRepresentationMap(x);
-                validPowerRepresentationMap.map(function (y) { return result += RomanNumeralsEncoderHelper.getCorrectSymbol(y.Value * y.Power); });
-            }
-        });
-        return result;
-    };
-    return RomanNumeralsEncoder;
-}());
-exports.RomanNumeralsEncoder = RomanNumeralsEncoder;
-var RomanNumeralsEncoderHelper = /** @class */ (function () {
-    function RomanNumeralsEncoderHelper() {
-    }
-    RomanNumeralsEncoderHelper.getPowerRepresentationMap = function (value) {
-        if (value < 0) {
-            throw new Error("The value should be positive: " + value);
+    RomanNumeralsDecoderHelper.getCorrespondingValueBySymbol = function (symbol) {
+        var symbolValueRepresentation = this._romanSymbolToNumberMap.find(function (x) { return x.Symbol == symbol; });
+        if (symbolValueRepresentation == undefined) {
+            throw new Error("Could not found value for symbol \"" + symbol + "\"");
         }
-        var splitValue = new Array();
-        var length = value.toString().length;
-        for (var i = length; i > 0; i--) {
-            var currentPower = Math.pow(10, i - 1);
-            var result = Math.floor(value / currentPower);
-            if (result > 0) {
-                splitValue.push(new PowerRepresentation(result, currentPower));
-                value -= result * currentPower;
-            }
-        }
-        return splitValue;
+        return symbolValueRepresentation.Value;
     };
-    RomanNumeralsEncoderHelper.getCorrectSymbol = function (value) {
-        var _a;
-        return (_a = this._romanSymbolToNumberMap.find(function (v, i, m) { return v.Value == value; })) === null || _a === void 0 ? void 0 : _a.Symbol;
-    };
-    RomanNumeralsEncoderHelper.isValidValue = function (value) {
-        return value == 1 || value % 5 == 0;
-    };
-    RomanNumeralsEncoderHelper.getValidPowerRepresentationMap = function (powerRepresentation) {
-        var powerRepresentationMap = new Array();
-        switch (powerRepresentation.Value) {
-            case 2:
-                [1, 1].map(function (x) { return powerRepresentationMap.push(new PowerRepresentation(x, powerRepresentation.Power)); });
-                break;
-            case 3:
-                [1, 1, 1].map(function (x) { return powerRepresentationMap.push(new PowerRepresentation(x, powerRepresentation.Power)); });
-                break;
-            case 4:
-                [1, 5].map(function (x) { return powerRepresentationMap.push(new PowerRepresentation(x, powerRepresentation.Power)); });
-                break;
-            case 6:
-                [5, 1].map(function (x) { return powerRepresentationMap.push(new PowerRepresentation(x, powerRepresentation.Power)); });
-                break;
-            case 7:
-                [5, 1, 1].map(function (x) { return powerRepresentationMap.push(new PowerRepresentation(x, powerRepresentation.Power)); });
-                break;
-            case 8:
-                [5, 1, 1, 1].map(function (x) { return powerRepresentationMap.push(new PowerRepresentation(x, powerRepresentation.Power)); });
-                break;
-            case 9:
-                powerRepresentationMap.push(new PowerRepresentation(1, powerRepresentation.Power));
-                powerRepresentationMap.push(new PowerRepresentation(1, powerRepresentation.Power * 10));
-                break;
-        }
-        // if (powerRepresentation.Value < 5) {
-        //     powerRepresentationMap = this.getSmallValidPowerRepresentationMap(powerRepresentation);
-        // }else{
-        //     this.getSmallValidPowerRepresentationMap(new PowerRepresentation(powerRepresentation.Value - 5, powerRepresentation.Power))
-        //         .reverse().map(x => powerRepresentationMap.push(x));
-        //     powerRepresentationMap.push(new PowerRepresentation(5, powerRepresentation.Power));
-        // }
-        /*
-        2 = 1 + 1
-        3 = 1 + 1
-        4 = 5 - 1
-        8 = 5 + 3
-        9 = 10 - 1
-        54 = 50 + 4 = 50 + 5 - 1 => C + V + I
-        */
-        return powerRepresentationMap;
-    };
-    RomanNumeralsEncoderHelper.getSmallValidPowerRepresentationMap = function (powerRepresentation) {
-        return [];
-    };
-    RomanNumeralsEncoderHelper._romanSymbolToNumberMap = [
+    RomanNumeralsDecoderHelper._romanSymbolToNumberMap = [
         new SymbolValueRepresentation("I", 1),
         new SymbolValueRepresentation("V", 5),
         new SymbolValueRepresentation("X", 10),
@@ -152,156 +71,35 @@ var RomanNumeralsEncoderHelper = /** @class */ (function () {
         new SymbolValueRepresentation("D", 500),
         new SymbolValueRepresentation("M", 1000)
     ];
-    return RomanNumeralsEncoderHelper;
+    return RomanNumeralsDecoderHelper;
 }());
-exports.RomanNumeralsEncoderHelper = RomanNumeralsEncoderHelper;
+exports.RomanNumeralsDecoderHelper = RomanNumeralsDecoderHelper;
 
 },{}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// /// <reference path="/runner/typings/mocha/index.d.ts" />
-// /// <reference path="/runner/typings/chai/index.d.ts" />
 var Main_1 = require("./Main");
 var chai_1 = require("chai");
-describe('solution', function () {
-    it('basic', function () {
-        var result = Main_1.solution(1000);
-        chai_1.expect(result).to.equal('M', '1000 should == "M"');
-        chai_1.assert.equal(Main_1.solution(1000), 'M', '1000 should == "M"');
-        chai_1.assert.equal(Main_1.solution(4), 'IV', '4 should == "IV"');
-        chai_1.assert.equal(Main_1.solution(1), 'I', '1 should == "I"');
-        chai_1.assert.equal(Main_1.solution(1990), 'MCMXC', '1990 should == "MCMXC"');
-        chai_1.assert.equal(Main_1.solution(2008), 'MMVIII', '2008 should == "MMVIII"');
-        chai_1.assert.equal(Main_1.solution(1444), 'MCDXLIV', '1444 should == "MCDXLIV"');
+describe("Roman numerals decoder solution", function () {
+    it('tests', function () {
+        chai_1.assert.equal(Main_1.solution('XXI'), 21);
+        chai_1.assert.equal(Main_1.solution('I'), 1);
+        chai_1.assert.equal(Main_1.solution('IV'), 4);
+        chai_1.assert.equal(Main_1.solution('MMVIII'), 2008);
+        chai_1.assert.equal(Main_1.solution('MDCLXVI'), 1666);
     });
 });
-describe('RomanNumeralsEncoderHelper', function () {
-    it('Try split negative number', function () {
-        chai_1.expect(function () { return Main_1.RomanNumeralsEncoderHelper.getPowerRepresentationMap(-1); }).to.throw("The value should be positive: -1");
+describe('RomanNumeralsDecoderHelper', function () {
+    it('Try get value by non-existing symbol', function () {
+        chai_1.expect(function () { return Main_1.RomanNumeralsDecoderHelper.getCorrespondingValueBySymbol('H'); }).to.throw('Could not found value for symbol "H"');
     });
-    it('Split simple number', function () {
-        var actual = Main_1.RomanNumeralsEncoderHelper.getPowerRepresentationMap(1000);
-        chai_1.expect(actual.length).to.equal(1, 'length should be 1');
-        chai_1.expect(actual[0].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[0].Power).to.equal(1000, 'power should be 1000');
-        actual = Main_1.RomanNumeralsEncoderHelper.getPowerRepresentationMap(500);
-        chai_1.expect(actual.length).to.equal(1, 'length should be 1');
-        chai_1.expect(actual[0].Value).to.equal(5, 'value should be 5');
-        chai_1.expect(actual[0].Power).to.equal(100, 'power should be 100');
-        actual = Main_1.RomanNumeralsEncoderHelper.getPowerRepresentationMap(100);
-        chai_1.expect(actual.length).to.equal(1, 'length should be 1');
-        chai_1.expect(actual[0].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[0].Power).to.equal(100, 'power should be 100');
-        actual = Main_1.RomanNumeralsEncoderHelper.getPowerRepresentationMap(50);
-        chai_1.expect(actual.length).to.equal(1, 'length should be 1');
-        chai_1.expect(actual[0].Value).to.equal(5, 'value should be 5');
-        chai_1.expect(actual[0].Power).to.equal(10, 'power should be 10');
-        actual = Main_1.RomanNumeralsEncoderHelper.getPowerRepresentationMap(10);
-        chai_1.expect(actual.length).to.equal(1, 'length should be 1');
-        chai_1.expect(actual[0].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[0].Power).to.equal(10, 'power should be 10');
-        actual = Main_1.RomanNumeralsEncoderHelper.getPowerRepresentationMap(5);
-        chai_1.expect(actual.length).to.equal(1, 'length should be 1');
-        chai_1.expect(actual[0].Value).to.equal(5, 'value should be 5');
-        chai_1.expect(actual[0].Power).to.equal(1, 'power should be 1');
-        actual = Main_1.RomanNumeralsEncoderHelper.getPowerRepresentationMap(1);
-        chai_1.expect(actual.length).to.equal(1, 'length should be 1');
-        chai_1.expect(actual[0].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[0].Power).to.equal(1, 'power should be 1');
-    });
-    it('Split complex number', function () {
-        var splitValue = Main_1.RomanNumeralsEncoderHelper.getPowerRepresentationMap(5342);
-        chai_1.expect(splitValue.length).to.equal(4, 'length should be 4');
-        chai_1.expect(splitValue[0].Power).to.equal(1000, 'power should be 1000');
-        chai_1.expect(splitValue[0].Value).to.equal(5, 'value should be 5');
-        chai_1.expect(splitValue[1].Power).to.equal(100, 'power should be 100');
-        chai_1.expect(splitValue[1].Value).to.equal(3, 'value should be 3');
-        chai_1.expect(splitValue[2].Power).to.equal(10, 'power should be 10');
-        chai_1.expect(splitValue[2].Value).to.equal(4, 'value should be 4');
-        chai_1.expect(splitValue[3].Power).to.equal(1, 'power should be 1');
-        chai_1.expect(splitValue[3].Value).to.equal(2, 'value should be 2');
-    });
-    it('Get symbol by correct value', function () {
-        var actual = Main_1.RomanNumeralsEncoderHelper.getCorrectSymbol(1);
-        chai_1.expect(actual).to.equal('I', 'symbol should be I');
-        actual = Main_1.RomanNumeralsEncoderHelper.getCorrectSymbol(5);
-        chai_1.expect(actual).to.equal('V', 'symbol should be V');
-        actual = Main_1.RomanNumeralsEncoderHelper.getCorrectSymbol(10);
-        chai_1.expect(actual).to.equal('X', 'symbol should be X');
-        actual = Main_1.RomanNumeralsEncoderHelper.getCorrectSymbol(50);
-        chai_1.expect(actual).to.equal('L', 'symbol should be L');
-        actual = Main_1.RomanNumeralsEncoderHelper.getCorrectSymbol(100);
-        chai_1.expect(actual).to.equal('C', 'symbol should be C');
-        actual = Main_1.RomanNumeralsEncoderHelper.getCorrectSymbol(500);
-        chai_1.expect(actual).to.equal('D', 'symbol should be D');
-        actual = Main_1.RomanNumeralsEncoderHelper.getCorrectSymbol(1000);
-        chai_1.expect(actual).to.equal('M', 'symbol should be M');
-    });
-    it('Get symbol by incorrect value', function () {
-        var actual = Main_1.RomanNumeralsEncoderHelper.getCorrectSymbol(3);
-        chai_1.expect(actual).to.be.undefined;
-    });
-    it('Check valid value', function () {
-        var actual = Main_1.RomanNumeralsEncoderHelper.isValidValue(1);
-        chai_1.expect(actual).to.be.true;
-        actual = Main_1.RomanNumeralsEncoderHelper.isValidValue(5);
-        chai_1.expect(actual).to.be.true;
-    });
-    it('Check invalid value', function () {
-        var actual = Main_1.RomanNumeralsEncoderHelper.isValidValue(3);
-        chai_1.expect(actual).to.be.false;
-    });
-    it('Get valid power representation of a simple value', function () {
-        var actual = Main_1.RomanNumeralsEncoderHelper.getValidPowerRepresentationMap(new Main_1.PowerRepresentation(2, 1));
-        chai_1.expect(actual.length).to.equal(2, 'length should be 2');
-        chai_1.expect(actual[0].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[0].Power).to.equal(1, 'power should be 1');
-        chai_1.expect(actual[1].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[1].Power).to.equal(1, 'power should be 1');
-        actual = Main_1.RomanNumeralsEncoderHelper.getValidPowerRepresentationMap(new Main_1.PowerRepresentation(3, 1));
-        chai_1.expect(actual.length).to.equal(3, 'length should be 3');
-        chai_1.expect(actual[0].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[0].Power).to.equal(1, 'power should be 1');
-        chai_1.expect(actual[1].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[1].Power).to.equal(1, 'power should be 1');
-        chai_1.expect(actual[2].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[2].Power).to.equal(1, 'power should be 1');
-        actual = Main_1.RomanNumeralsEncoderHelper.getValidPowerRepresentationMap(new Main_1.PowerRepresentation(4, 1));
-        chai_1.expect(actual.length).to.equal(2, 'length should be 2');
-        chai_1.expect(actual[0].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[0].Power).to.equal(1, 'power should be 1');
-        chai_1.expect(actual[1].Value).to.equal(5, 'value should be 5');
-        chai_1.expect(actual[1].Power).to.equal(1, 'power should be 1');
-        actual = Main_1.RomanNumeralsEncoderHelper.getValidPowerRepresentationMap(new Main_1.PowerRepresentation(6, 1));
-        chai_1.expect(actual.length).to.equal(2, 'length should be 2');
-        chai_1.expect(actual[0].Value).to.equal(5, 'value should be 5');
-        chai_1.expect(actual[0].Power).to.equal(1, 'power should be 1');
-        chai_1.expect(actual[1].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[1].Power).to.equal(1, 'power should be 1');
-        actual = Main_1.RomanNumeralsEncoderHelper.getValidPowerRepresentationMap(new Main_1.PowerRepresentation(7, 1));
-        chai_1.expect(actual.length).to.equal(3, 'length should be 3');
-        chai_1.expect(actual[0].Value).to.equal(5, 'value should be 5');
-        chai_1.expect(actual[0].Power).to.equal(1, 'power should be 1');
-        chai_1.expect(actual[1].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[1].Power).to.equal(1, 'power should be 1');
-        chai_1.expect(actual[2].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[2].Power).to.equal(1, 'power should be 1');
-        actual = Main_1.RomanNumeralsEncoderHelper.getValidPowerRepresentationMap(new Main_1.PowerRepresentation(8, 1));
-        chai_1.expect(actual.length).to.equal(4, 'length should be 4');
-        chai_1.expect(actual[0].Value).to.equal(5, 'value should be 5');
-        chai_1.expect(actual[0].Power).to.equal(1, 'power should be 1');
-        chai_1.expect(actual[1].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[1].Power).to.equal(1, 'power should be 1');
-        chai_1.expect(actual[2].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[2].Power).to.equal(1, 'power should be 1');
-        chai_1.expect(actual[3].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[3].Power).to.equal(1, 'power should be 1');
-        actual = Main_1.RomanNumeralsEncoderHelper.getValidPowerRepresentationMap(new Main_1.PowerRepresentation(9, 1));
-        chai_1.expect(actual.length).to.equal(2, 'length should be 2');
-        chai_1.expect(actual[0].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[0].Power).to.equal(1, 'power should be 1');
-        chai_1.expect(actual[1].Value).to.equal(1, 'value should be 1');
-        chai_1.expect(actual[1].Power).to.equal(10, 'power should be 10');
+    it('Get value by existing symbol', function () {
+        var values = [1, 5, 10, 50, 100, 500, 1000];
+        var symbols = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
+        symbols.forEach(function (symbol, index) {
+            var actual = Main_1.RomanNumeralsDecoderHelper.getCorrespondingValueBySymbol(symbol);
+            chai_1.assert.equal(actual, values[index]);
+        });
     });
 });
 

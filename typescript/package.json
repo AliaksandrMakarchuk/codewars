@@ -4,6 +4,7 @@
   "description": "Repository that contains TypeScript code for codewars tasks",
   "main": "index.js",
   "scripts": {
+    "tsc": "tsc -p tsconfig.json",
     "test": "mocha --reporter spec"
   },
   "repository": {

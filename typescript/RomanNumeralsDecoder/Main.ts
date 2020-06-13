@@ -1,7 +1,7 @@
 export function solution(roman: string): number {
     // complete the solution by transforming the
     // string roman numeral into an integer
-    return 0;
+    return new RomanNumeralsDecoder().decode(roman);
 }
 
 export class PowerRepresentation {
@@ -37,6 +37,32 @@ export class SymbolValueRepresentation {
     constructor(symbol: string, value: number) {
         this._symbol = symbol;
         this._value = value;
+    }
+}
+
+export class RomanNumeralsDecoder {
+    public decode(value: string): number {
+        if (value.length < 1) {
+            throw new Error("Value should be meaningful");
+        }
+
+        let previous: number = 0;
+        let current: number = 0;
+        let result: number = 0;
+
+        for (let i = 0; i < value.length; i++) {
+            current = RomanNumeralsDecoderHelper.getCorrespondingValueBySymbol(value[i]);
+            if (i > 0 && current > previous) {
+                result -= previous;
+                result += current - previous;
+            } else {
+                result += current;
+            }
+
+            previous = current;
+        }
+
+        return result;
     }
 }
 

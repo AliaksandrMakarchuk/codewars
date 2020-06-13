@@ -1,4 +1,4 @@
-import { solution, RomanNumeralsDecoderHelper } from './Main';
+import { solution, RomanNumeralsDecoderHelper, RomanNumeralsDecoder } from './Main';
 import { assert, expect } from 'chai';
 
 describe("Roman numerals decoder solution", function () {
@@ -8,6 +8,12 @@ describe("Roman numerals decoder solution", function () {
         assert.equal(solution('IV'), 4);
         assert.equal(solution('MMVIII'), 2008);
         assert.equal(solution('MDCLXVI'), 1666);
+    });
+});
+
+describe('RomanNumeralsDecoder', function () {
+    it('Try encode meaningless value', () => {
+        expect(() => new RomanNumeralsDecoder().decode('')).to.throw('Value should be meaningful');
     });
 });
 
